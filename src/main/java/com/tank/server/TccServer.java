@@ -77,7 +77,7 @@ public class TccServer {
   }
 
   private Map<Integer, MessageHandler> registMessageHandler() {
-    handlers.putIfAbsent(MsgType.CREATE.ordinal(), new HelloMsgHandler());
+    handlers.putIfAbsent(MsgType.HELLO.ordinal(), new HelloMsgHandler());
     return handlers;
   }
 

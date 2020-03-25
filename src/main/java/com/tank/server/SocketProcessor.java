@@ -1,5 +1,7 @@
 package com.tank.server;
 
+import com.tank.service.MessageHandler;
+
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.Socket;
@@ -34,12 +36,13 @@ public class SocketProcessor implements Runnable {
         byte[] body = new byte[bodyLen];
         if (bodyLen <= buffer.remaining()) {
           ByteBuffer xx = buffer.get(body);
-          String appName = new String(body);
           xx.flip();
           xx.clear();
-          TccServer.addSocket(appName, socket);
+          MessageHandler messageHandler = TccServer.handlers.get(type);
+          if (messageHandler != null) {
+            messageHandler.process(body, socket);
+          }
 
-          logger.info(String.format("client :[%s] connect success, online is:[%d]", appName, TccServer.online()));
         }
       }
     } catch (Exception e) {
