@@ -2,6 +2,7 @@ package com.tank.server;
 
 import com.google.common.collect.Maps;
 import com.tank.message.MsgType;
+import com.tank.service.CoordinatorHandler;
 import com.tank.service.HelloMsgHandler;
 import com.tank.service.MessageHandler;
 import lombok.SneakyThrows;
@@ -78,6 +79,7 @@ public class TccServer {
 
   private Map<Integer, MessageHandler> registMessageHandler() {
     handlers.putIfAbsent(MsgType.HELLO.ordinal(), new HelloMsgHandler());
+    handlers.putIfAbsent(MsgType.CREATE.ordinal(), new CoordinatorHandler());
     return handlers;
   }
 
